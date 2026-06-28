@@ -46,7 +46,7 @@ export default function SubscriptionAssign({ members, plans, onAssigned }) {
                 </div>
             )}
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <select
                     value={memberId}
                     onChange={(e) => setMemberId(e.target.value)}

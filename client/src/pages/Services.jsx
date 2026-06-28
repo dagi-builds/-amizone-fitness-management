@@ -27,16 +27,16 @@ export default function Services() {
     ]
 
     return (
-        <div className="bg-zinc-950 min-h-screen px-10 py-24">
+        <div className="bg-zinc-950 min-h-screen px-4 md:px-10 py-16 md:py-24">
             <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl font-bold text-zinc-100 tracking-tight text-center">
+                <h1 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight text-center">
                     Our <span className="text-emerald-400">Services</span>
                 </h1>
-                <p className="text-zinc-400 text-lg mt-4 text-center max-w-2xl mx-auto">
+                <p className="text-zinc-400 text-base md:text-lg mt-4 text-center max-w-2xl mx-auto px-2">
                     Everything you need to train, recover, and grow — all under one roof.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 md:mt-14">
                     {services.map((service) => (
                         <div
                             key={service.title}

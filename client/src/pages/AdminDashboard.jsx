@@ -40,16 +40,16 @@ export default function AdminDashboard() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-zinc-950 px-10 py-12">
-            <div className="max-w-6xl mx-auto space-y-10">
-                <div className="flex items-center justify-between">
+        <div className="min-h-screen bg-zinc-950 px-4 md:px-10 py-8 md:py-12">
+            <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-4xl font-bold text-zinc-100 tracking-tight">
+                        <h1 className="text-2xl md:text-4xl font-bold text-zinc-100 tracking-tight">
                             Amizone Fitness Center
                         </h1>
-                        <p className="text-zinc-500 mt-1">Admin dashboard</p>
+                        <p className="text-zinc-500 mt-1 text-sm md:text-base">Admin dashboard</p>
                     </div>
-                    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-6 py-4">
+                    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-6 py-4 self-start sm:self-auto">
                         <p className="text-zinc-500 text-sm">Total members</p>
                         <p className="text-emerald-400 text-2xl font-bold">{members.length}</p>
                     </div>
@@ -62,14 +62,14 @@ export default function AdminDashboard() {
                         <MemberForm onRegistered={loadMembers} />
 
                         <div>
-                            <h2 className="text-zinc-100 text-xl font-semibold mb-4">Members</h2>
+                            <h2 className="text-zinc-100 text-lg md:text-xl font-semibold mb-4">Members</h2>
                             <MemberTable members={members} />
                         </div>
 
                         <PlanForm onCreated={loadPlans} />
 
                         <div>
-                            <h2 className="text-zinc-100 text-xl font-semibold mb-4">Membership Plans</h2>
+                            <h2 className="text-zinc-100 text-lg md:text-xl font-semibold mb-4">Membership Plans</h2>
                             <PlanList plans={plans} />
                         </div>
 
