@@ -6,6 +6,7 @@ const subscriptionsRoutes = require('./routes/subscriptions.routes');
 const paymentsRoutes = require('./routes/payments.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
 const aiRoutes = require('./routes/ai.routes');
+const plansRoutes = require('./routes/plans.routes');
 
 const errorHandler = require('./middleware/errorHandler');
 
@@ -32,6 +33,7 @@ app.use('/api/subscriptions', subscriptionsRoutes);
 app.use('/api/payments', paymentsRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/plans', plansRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Not found', path: req.originalUrl });
