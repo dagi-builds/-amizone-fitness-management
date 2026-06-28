@@ -1,26 +1,42 @@
 import { useEffect, useState } from 'react'
-import { getMembers } from '../lib/api'
+import { getMembers, getPlans } from '../lib/api'
 import MemberForm from '../components/admin/MemberForm'
 import MemberTable from '../components/admin/MemberTable'
+import PlanForm from '../components/admin/PlanForm'
+import PlanList from '../components/admin/PlanList'
+import SubscriptionAssign from '../components/admin/SubscriptionAssign'
 
 export default function AdminDashboard() {
     const [members, setMembers] = useState([])
+    const [plans, setPlans] = useState([])
     const [loading, setLoading] = useState(true)
 
     async function loadMembers() {
-        setLoading(true)
         try {
             const data = await getMembers()
             setMembers(data)
         } catch (err) {
             console.error(err)
-        } finally {
-            setLoading(false)
         }
     }
 
+    async function loadPlans() {
+        try {
+            const data = await getPlans()
+            setPlans(data)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    async function loadAll() {
+        setLoading(true)
+        await Promise.all([loadMembers(), loadPlans()])
+        setLoading(false)
+    }
+
     useEffect(() => {
-        loadMembers()
+        loadAll()
     }, [])
 
     return (
@@ -39,16 +55,27 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                <MemberForm onRegistered={loadMembers} />
+                {loading ? (
+                    <p className="text-zinc-500">Loading...</p>
+                ) : (
+                    <>
+                        <MemberForm onRegistered={loadMembers} />
 
-                <div>
-                    <h2 className="text-zinc-100 text-xl font-semibold mb-4">Members</h2>
-                    {loading ? (
-                        <p className="text-zinc-500">Loading...</p>
-                    ) : (
-                        <MemberTable members={members} />
-                    )}
-                </div>
+                        <div>
+                            <h2 className="text-zinc-100 text-xl font-semibold mb-4">Members</h2>
+                            <MemberTable members={members} />
+                        </div>
+
+                        <PlanForm onCreated={loadPlans} />
+
+                        <div>
+                            <h2 className="text-zinc-100 text-xl font-semibold mb-4">Membership Plans</h2>
+                            <PlanList plans={plans} />
+                        </div>
+
+                        <SubscriptionAssign members={members} plans={plans} onAssigned={loadMembers} />
+                    </>
+                )}
             </div>
         </div>
     )

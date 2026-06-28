@@ -37,6 +37,16 @@ export function assignSubscription(memberId, planId) {
         body: JSON.stringify({ member_id: memberId, plan_id: planId }),
     })
 }
+export function createPlan(planData) {
+    return request('/plans', {
+        method: 'POST',
+        body: JSON.stringify(planData),
+    })
+}
+
+export function getPlans() {
+    return request('/plans')
+}
 
 export function checkInMember(phone) {
     return request('/attendance/check-in', {
