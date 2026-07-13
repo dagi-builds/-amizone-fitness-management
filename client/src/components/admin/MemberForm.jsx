@@ -12,6 +12,7 @@ export default function MemberForm({ onRegistered }) {
     })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -21,6 +22,7 @@ export default function MemberForm({ onRegistered }) {
         e.preventDefault()
         setLoading(true)
         setError(null)
+        setSuccess(false)
         try {
             const member = await registerMember({
                 ...form,
@@ -35,6 +37,8 @@ export default function MemberForm({ onRegistered }) {
                 fitness_goal: '',
                 gender: '',
             })
+            setSuccess(true)
+            setTimeout(() => setSuccess(false), 3000)
             onRegistered?.(member)
         } catch (err) {
             setError(err.message)
@@ -44,83 +48,90 @@ export default function MemberForm({ onRegistered }) {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 space-y-5"
-        >
-            <h2 className="text-zinc-100 text-xl font-semibold tracking-tight">
-                Register member
-            </h2>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-5">
+                <h2 className="text-white font-black text-lg">Register New Member</h2>
+                <span className="text-yellow-400 text-xs font-bold tracking-widest uppercase bg-yellow-400/10 border border-yellow-400/20 px-3 py-1 rounded-lg">
+                    + New Member
+                </span>
+            </div>
 
             {error && (
-                <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3">
-                    {error}
+                <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
+                    <span>⚠️</span> {error}
+                </div>
+            )}
+            {success && (
+                <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
+                    <span>✅</span> Member registered successfully!
                 </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                    name="full_name"
-                    value={form.full_name}
-                    onChange={handleChange}
-                    placeholder="Full name"
-                    required
-                    className="col-span-2 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <input
-                    name="phone_number"
-                    value={form.phone_number}
-                    onChange={handleChange}
-                    placeholder="Phone number"
-                    required
-                    className="col-span-2 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <input
-                    name="weight_kg"
-                    value={form.weight_kg}
-                    onChange={handleChange}
-                    placeholder="Weight (kg)"
-                    type="number"
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <input
-                    name="height_cm"
-                    value={form.height_cm}
-                    onChange={handleChange}
-                    placeholder="Height (cm)"
-                    type="number"
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <select
-                    name="gender"
-                    value={form.gender}
-                    onChange={handleChange}
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 outline-none focus:border-emerald-400 transition"
-                >
-                    <option value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <select
-                    name="fitness_goal"
-                    value={form.fitness_goal}
-                    onChange={handleChange}
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 outline-none focus:border-emerald-400 transition"
-                >
-                    <option value="">Fitness goal</option>
-                    <option value="Weight Loss">Weight loss</option>
-                    <option value="Muscle Gain">Muscle gain</option>
-                    <option value="General Fitness">General fitness</option>
-                </select>
-            </div>
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                    <input
+                        name="full_name"
+                        value={form.full_name}
+                        onChange={handleChange}
+                        placeholder="Full name"
+                        required
+                        className="col-span-1 sm:col-span-2 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <input
+                        name="phone_number"
+                        value={form.phone_number}
+                        onChange={handleChange}
+                        placeholder="Phone number"
+                        required
+                        className="col-span-1 sm:col-span-2 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <input
+                        name="weight_kg"
+                        value={form.weight_kg}
+                        onChange={handleChange}
+                        placeholder="Weight (kg)"
+                        type="number"
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <input
+                        name="height_cm"
+                        value={form.height_cm}
+                        onChange={handleChange}
+                        placeholder="Height (cm)"
+                        type="number"
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <select
+                        name="gender"
+                        value={form.gender}
+                        onChange={handleChange}
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white outline-none focus:border-yellow-400 transition text-sm"
+                    >
+                        <option value="">Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <select
+                        name="fitness_goal"
+                        value={form.fitness_goal}
+                        onChange={handleChange}
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white outline-none focus:border-yellow-400 transition text-sm"
+                    >
+                        <option value="">Fitness goal</option>
+                        <option value="Weight Loss">Weight Loss</option>
+                        <option value="Muscle Gain">Muscle Gain</option>
+                        <option value="General Fitness">General Fitness</option>
+                    </select>
+                </div>
 
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-emerald-400 hover:bg-emerald-300 disabled:opacity-50 text-zinc-950 font-semibold rounded-xl py-3 transition"
-            >
-                {loading ? 'Registering...' : 'Register member'}
-            </button>
-        </form>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 text-zinc-950 font-black rounded-xl py-3 transition text-sm uppercase tracking-wide"
+                >
+                    {loading ? 'Registering...' : 'Register Member →'}
+                </button>
+            </form>
+        </div>
     )
 }

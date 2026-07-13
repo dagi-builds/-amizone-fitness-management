@@ -9,6 +9,7 @@ export default function PlanForm({ onCreated }) {
     })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -18,6 +19,7 @@ export default function PlanForm({ onCreated }) {
         e.preventDefault()
         setLoading(true)
         setError(null)
+        setSuccess(false)
         try {
             const plan = await createPlan({
                 name: form.name,
@@ -25,6 +27,8 @@ export default function PlanForm({ onCreated }) {
                 duration_days: Number(form.duration_days),
             })
             setForm({ name: '', price_etb: '', duration_days: '' })
+            setSuccess(true)
+            setTimeout(() => setSuccess(false), 3000)
             onCreated?.(plan)
         } catch (err) {
             setError(err.message)
@@ -34,56 +38,63 @@ export default function PlanForm({ onCreated }) {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 space-y-5"
-        >
-            <h2 className="text-zinc-100 text-xl font-semibold tracking-tight">
-                Add membership plan
-            </h2>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-5">
+                <h2 className="text-white font-black text-lg">Add Membership Plan</h2>
+                <span className="text-blue-400 text-xs font-bold tracking-widest uppercase bg-blue-400/10 border border-blue-400/20 px-3 py-1 rounded-lg">
+                    + New Plan
+                </span>
+            </div>
 
             {error && (
-                <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3">
-                    {error}
+                <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
+                    <span>⚠️</span> {error}
+                </div>
+            )}
+            {success && (
+                <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
+                    <span>✅</span> Plan created successfully!
                 </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <input
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Plan name (e.g. Basic)"
-                    required
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <input
-                    name="price_etb"
-                    value={form.price_etb}
-                    onChange={handleChange}
-                    placeholder="Price (ETB)"
-                    type="number"
-                    required
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-                <input
-                    name="duration_days"
-                    value={form.duration_days}
-                    onChange={handleChange}
-                    placeholder="Duration (days)"
-                    type="number"
-                    required
-                    className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-emerald-400 transition"
-                />
-            </div>
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                    <input
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        placeholder="Plan name (e.g. Basic)"
+                        required
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <input
+                        name="price_etb"
+                        value={form.price_etb}
+                        onChange={handleChange}
+                        placeholder="Price in ETB"
+                        type="number"
+                        required
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                    <input
+                        name="duration_days"
+                        value={form.duration_days}
+                        onChange={handleChange}
+                        placeholder="Duration (days)"
+                        type="number"
+                        required
+                        className="bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition text-sm"
+                    />
+                </div>
 
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-emerald-400 hover:bg-emerald-300 disabled:opacity-50 text-zinc-950 font-semibold rounded-xl py-3 transition"
-            >
-                {loading ? 'Adding...' : 'Add plan'}
-            </button>
-        </form>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 text-zinc-950 font-black rounded-xl py-3 transition text-sm uppercase tracking-wide"
+                >
+                    {loading ? 'Adding...' : 'Add Plan →'}
+                </button>
+            </form>
+        </div>
     )
 }
