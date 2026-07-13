@@ -13,10 +13,12 @@ export default function Navbar() {
     ]
 
     return (
-        <nav className="bg-zinc-950 border-b border-zinc-800 px-6 md:px-10 py-5">
-            <div className="flex items-center justify-between">
-                <Link to="/" className="text-xl font-bold text-zinc-100 tracking-tight">
-                    Amizone <span className="text-emerald-400">Fitness</span>
+        <nav className="bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800 px-6 md:px-10 py-5 sticky top-0 z-50">
+            <div className="max-w-6xl mx-auto flex items-center justify-between">
+                <Link to="/" className="flex items-center gap-2">
+                    <span className="text-2xl font-black text-white tracking-tight">
+                        AMIZONE<span className="text-yellow-400">.GYM</span>
+                    </span>
                 </Link>
 
                 <div className="hidden md:flex items-center gap-8">
@@ -24,21 +26,22 @@ export default function Navbar() {
                         <Link
                             key={link.to}
                             to={link.to}
-                            className={`text-sm font-medium transition ${location.pathname === link.to
-                                    ? 'text-emerald-400'
-                                    : 'text-zinc-400 hover:text-zinc-100'
+                            className={`text-sm font-semibold tracking-wide transition ${location.pathname === link.to
+                                    ? 'text-yellow-400'
+                                    : 'text-zinc-400 hover:text-white'
                                 }`}
                         >
                             {link.label}
                         </Link>
                     ))}
-                    <Link
-                        to="/admin"
-                        className="bg-emerald-400 hover:bg-emerald-300 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-xl transition"
-                    >
-                        Staff Login
-                    </Link>
                 </div>
+
+                <Link
+                    to="/contact"
+                    className="hidden md:inline-block bg-yellow-400 hover:bg-yellow-300 text-zinc-950 text-sm font-bold px-6 py-2.5 rounded-xl transition"
+                >
+                    Join Now
+                </Link>
 
                 <button
                     onClick={() => setOpen(!open)}
@@ -58,24 +61,24 @@ export default function Navbar() {
             </div>
 
             {open && (
-                <div className="md:hidden flex flex-col gap-4 mt-6 pb-2">
+                <div className="md:hidden flex flex-col gap-4 mt-6 pb-4 max-w-6xl mx-auto">
                     {links.map((link) => (
                         <Link
                             key={link.to}
                             to={link.to}
                             onClick={() => setOpen(false)}
-                            className={`text-sm font-medium ${location.pathname === link.to ? 'text-emerald-400' : 'text-zinc-400'
+                            className={`text-sm font-semibold ${location.pathname === link.to ? 'text-yellow-400' : 'text-zinc-400'
                                 }`}
                         >
                             {link.label}
                         </Link>
                     ))}
                     <Link
-                        to="/admin"
+                        to="/contact"
                         onClick={() => setOpen(false)}
-                        className="bg-emerald-400 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-xl text-center"
+                        className="bg-yellow-400 text-zinc-950 text-sm font-bold px-6 py-3 rounded-xl text-center"
                     >
-                        Staff Login
+                        Join Now
                     </Link>
                 </div>
             )}
