@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const ADMIN_PIN = import.meta.env.VITE_ADMIN_PIN || '1234'
+const ADMIN_PIN = (import.meta.env.VITE_ADMIN_PIN || '1234').trim()
 
 export default function AdminGate({ children }) {
     const [pin, setPin] = useState('')
@@ -9,7 +9,7 @@ export default function AdminGate({ children }) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        if (pin === ADMIN_PIN) {
+        if (pin.trim() === ADMIN_PIN) {
             setUnlocked(true)
         } else {
             setError(true)
