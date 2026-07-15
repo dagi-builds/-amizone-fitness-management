@@ -6,6 +6,7 @@ import About from './pages/About'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
 import AdminDashboard from './pages/AdminDashboard'
+import AdminGate from './components/AdminGate'
 
 function PublicLayout({ children }) {
   return (
@@ -25,7 +26,11 @@ export default function App() {
         <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
         <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
         <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={
+          <AdminGate>
+            <AdminDashboard />
+          </AdminGate>
+        } />
       </Routes>
     </BrowserRouter>
   )

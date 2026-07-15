@@ -5,6 +5,7 @@ import MemberTable from '../components/admin/MemberTable'
 import PlanForm from '../components/admin/PlanForm'
 import PlanList from '../components/admin/PlanList'
 import SubscriptionAssign from '../components/admin/SubscriptionAssign'
+import ShopDashboard from './ShopDashboard'
 
 export default function AdminDashboard() {
     const [members, setMembers] = useState([])
@@ -44,6 +45,7 @@ export default function AdminDashboard() {
         { id: 'members', label: '👥 Members' },
         { id: 'plans', label: '📋 Plans' },
         { id: 'subscriptions', label: '🔗 Subscriptions' },
+        { id: 'shop', label: '🛍️ Shop' },
     ]
 
     return (
@@ -74,16 +76,16 @@ export default function AdminDashboard() {
                 </div>
             </header>
 
-            <div className="bg-zinc-900 border-b border-zinc-800 px-4 md:px-10">
-                <div className="max-w-7xl mx-auto flex gap-1">
+            <div className="bg-zinc-900 border-b border-zinc-800 px-4 md:px-10 overflow-x-auto">
+                <div className="max-w-7xl mx-auto flex gap-1 min-w-max">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={
                                 activeTab === tab.id
-                                    ? 'px-5 py-3 text-sm font-bold transition border-b-2 border-yellow-400 text-yellow-400'
-                                    : 'px-5 py-3 text-sm font-bold transition border-b-2 border-transparent text-zinc-500 hover:text-zinc-300'
+                                    ? 'px-5 py-3 text-sm font-bold transition border-b-2 border-yellow-400 text-yellow-400 whitespace-nowrap'
+                                    : 'px-5 py-3 text-sm font-bold transition border-b-2 border-transparent text-zinc-500 hover:text-zinc-300 whitespace-nowrap'
                             }
                         >
                             {tab.label}
@@ -97,10 +99,7 @@ export default function AdminDashboard() {
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div
-                                    key={i}
-                                    className="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 animate-pulse"
-                                />
+                                <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 animate-pulse" />
                             ))}
                         </div>
                     ) : (
@@ -113,7 +112,7 @@ export default function AdminDashboard() {
                                             <h2 className="text-white font-black text-lg">All Members</h2>
                                             <span className="text-zinc-500 text-sm">{members.length} total</span>
                                         </div>
-                                        <MemberTable members={members} />
+                                        <MemberTable members={members} onRefresh={loadMembers} />
                                     </div>
                                 </div>
                             )}
@@ -126,7 +125,7 @@ export default function AdminDashboard() {
                                             <h2 className="text-white font-black text-lg">Membership Plans</h2>
                                             <span className="text-zinc-500 text-sm">{plans.length} plans</span>
                                         </div>
-                                        <PlanList plans={plans} />
+                                        <PlanList plans={plans} onRefresh={loadPlans} />
                                     </div>
                                 </div>
                             )}
@@ -140,6 +139,8 @@ export default function AdminDashboard() {
                                     />
                                 </div>
                             )}
+
+                            {activeTab === 'shop' && <ShopDashboard />}
                         </div>
                     )}
                 </div>
