@@ -28,6 +28,7 @@ export default function AdminGate({ children }) {
                         AMIZONE<span className="text-yellow-400">.GYM</span>
                     </h1>
                     <p className="text-zinc-500 text-sm mt-2">Admin Access Only</p>
+                    <p className="text-red-400 text-xs mt-2 break-all">DEBUG expected="{ADMIN_PIN}" length={ADMIN_PIN.length}</p>
                 </div>
 
                 {error && (
