@@ -6,6 +6,7 @@ import PlanForm from '../components/admin/PlanForm'
 import PlanList from '../components/admin/PlanList'
 import SubscriptionAssign from '../components/admin/SubscriptionAssign'
 import ShopDashboard from './ShopDashboard'
+import ChangePinForm from '../components/admin/ChangePinForm'
 
 export default function AdminDashboard() {
     const [members, setMembers] = useState([])
@@ -46,6 +47,7 @@ export default function AdminDashboard() {
         { id: 'plans', label: '📋 Plans' },
         { id: 'subscriptions', label: '🔗 Subscriptions' },
         { id: 'shop', label: '🛍️ Shop' },
+        { id: 'settings', label: '⚙️ Settings' },
     ]
 
     return (
@@ -99,7 +101,10 @@ export default function AdminDashboard() {
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 animate-pulse" />
+                                <div
+                                    key={i}
+                                    className="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 animate-pulse"
+                                />
                             ))}
                         </div>
                     ) : (
@@ -141,6 +146,12 @@ export default function AdminDashboard() {
                             )}
 
                             {activeTab === 'shop' && <ShopDashboard />}
+
+                            {activeTab === 'settings' && (
+                                <div className="max-w-lg">
+                                    <ChangePinForm />
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

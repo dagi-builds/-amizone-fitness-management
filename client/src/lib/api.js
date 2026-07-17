@@ -78,3 +78,13 @@ export function createSale(data) {
 export function getSalesSummary() {
     return request('/sales/summary')
 }
+
+export function getAdminPin() {
+    return request('/settings/pin')
+}
+export function updateAdminPin(currentPin, newPin) {
+    return request('/settings/pin', {
+        method: 'PUT',
+        body: JSON.stringify({ current_pin: currentPin, new_pin: newPin }),
+    })
+}
