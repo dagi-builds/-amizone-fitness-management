@@ -8,7 +8,9 @@ const attendanceRoutes = require('./routes/attendance.routes');
 const aiRoutes = require('./routes/ai.routes');
 const plansRoutes = require('./routes/plans.routes');
 const productsRoutes = require('./routes/products.routes');
+const salesRoutes = require('./routes/sales.routes');
 const settingsRoutes = require('./routes/settings.routes');
+
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
