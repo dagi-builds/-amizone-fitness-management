@@ -35,7 +35,9 @@ export default function ChangePinForm() {
             await updateAdminPin(form.current_pin, form.new_pin)
             setForm({ current_pin: '', new_pin: '', confirm_pin: '' })
             setSuccess(true)
-            setTimeout(() => setSuccess(false), 4000)
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000)
         } catch (err) {
             setError(err.message)
         } finally {
@@ -62,7 +64,7 @@ export default function ChangePinForm() {
             )}
             {success && (
                 <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
-                    <span>✅</span> PIN updated successfully! Use your new PIN next time you log in.
+                    <span>✅</span> PIN updated! Logging you out in 2 seconds — use your new PIN to log back in.
                 </div>
             )}
 
