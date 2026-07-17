@@ -80,7 +80,7 @@ export default function AdminGate({ children }) {
                                 type="password"
                                 value={pin}
                                 onChange={(e) => setPin(e.target.value)}
-                                placeholder="Enter admin PIN"
+                                placeholder="Enter PIN"
                                 maxLength={6}
                                 autoFocus
                                 className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-widest placeholder:text-zinc-600 outline-none focus:border-yellow-400 transition"
